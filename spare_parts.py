@@ -63,7 +63,7 @@ def driver_app():
             if(driver_id and driver_name and driver_email and driver_phone):
                 # clearing the input fields
                 
-                print(driver_id, driver_name, driver_email, driver_phone)
+                #print(driver_id, driver_name, driver_email, driver_phone)
                 if(submit_button == True):
                     # adding driver to database
                  
@@ -110,7 +110,7 @@ def driver_app():
                     connector.commit()
                     st.success("Driver Removed Successfully")
             except:
-                st.error("Driver list is empty")
+                st.error("Either Driver list is empty or driver has been assigned a cab")
         if(operation_select == "Update Driver"):
             st.subheader("Update Driver")
             try:
@@ -119,8 +119,9 @@ def driver_app():
                 submit_button = st.button("Search")
                 if(len(driver_id) > 1):
                     data = get_driver_specific(driver_id[0])
-                    st.write(data)
-                    print("_inital")
+                    with st.expander("View Raw Data", expanded = False):
+                        st.write(data)
+                    #print("_inital")
                     driver_id_new = st.text_input("Enter Driver ID",value = data[0][0],max_chars=10, key="driver_id_new", help="Enter Driver ID")
                     driver_name_new = st.text_input("Enter Driver Name",value = data[0][1],max_chars=50, key="driver_name_new", help="Enter Driver Name")
                     driver_email_new = st.text_input("Enter Driver Email",value = data[0][2],max_chars=50, key="driver_email_new", help="Enter Driver Email")
@@ -133,7 +134,7 @@ def driver_app():
                         st.success("Driver Updated Successfully")
 
             except:
-                st.error("Driver list is empty")
+                st.error("Either Driver list is empty or driver has been assigned a cab")
      
 
 # ======================================[Cab Area] ====================================================
@@ -202,7 +203,7 @@ def cab_app():
             if(cab_id and cab_model and cab_color):
                 # clearing the input fields
                 
-                print(cab_id, cab_model, cab_color)
+                #print(cab_id, cab_model, cab_color)
                 if(submit_button == True):
                     # adding driver to database
                  
@@ -222,7 +223,7 @@ def cab_app():
                         connector.commit()
                         st.success("Cab Added Successfully")
                     except:
-                        st.error("Cab ID already exists")
+                        st.error("Either Cab ID already exists or Cab has been assigned to a driver")
                     finally:
                         mycursor.close()
                         connector.close()
@@ -249,7 +250,7 @@ def cab_app():
                     connector.commit()
                     st.success("Cab Removed Successfully")
             except:
-                st.error("Driver list is empty")
+                st.error("Either Cab list is empty or Cab has been assigned to a driver")
         if(operation_select == "Update Cab"):
             st.subheader("Update Cab")
             try:
@@ -270,10 +271,10 @@ def cab_app():
                         print("1")
                         update_cab(cab_id_new,cab_name_new,cab_color_new,cab_id[0])
                         print("2")
-                        st.success("Driver Updated Successfully")
+                        st.success("Cabs Updated Successfully")
 
             except:
-                st.error("Driver list is empty or cab has been assigned to a driver")
+                st.error("Either Cab list is empty or cab has been assigned to a driver")
     
 
 
@@ -352,7 +353,8 @@ def managment():
     if(options == "Remove Assignment"):
         data = get_data()
         data = list(set(data))  # removing reduentant data
-        st.write(data)
+        with st.expander("View Raw Assignment", expanded = False):
+            st.write(data)
         target_data = st.selectbox("select assigment to delete",[""]+[i for i in data])
         if(len(target_data) > 1):
             delete_data(target_data[0],target_data[1])
