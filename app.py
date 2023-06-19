@@ -2,7 +2,7 @@ import streamlit as st
 from spare_parts import *
 
 
-st.set_page_config(page_title="Spare Parts Management", page_icon="🚗", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="Cab  Management", page_icon="🚗", layout="wide", initial_sidebar_state="expanded")
 st.image("https://www.pccwebworld.com/images/cab-management-system.jpg", width=700)
 
 with st.sidebar:
