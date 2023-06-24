@@ -53,7 +53,7 @@ def driver_app():
     with st.expander("Modify Driver Database", expanded = False):
         operation_select = st.selectbox("Select Operation", ["","Add Driver", "Remove Driver", "Update Driver"])
         if(operation_select == "Add Driver"):
-            driver_id = st.text_input("Enter Driver ID [Numeric Value Only]",max_chars=10, key="driver_id", help="Enter Driver ID")
+            driver_id = st.text_input("Enter Driver ID",max_chars=10, key="driver_id", help="Enter Driver ID")
             driver_name = st.text_input("Enter Driver Name",max_chars=50, key="driver_name", help="Enter Driver Name")
             driver_email = st.text_input("Enter Driver Email",max_chars=50, key="driver_email", help="Enter Driver Email")
             driver_phone = st.text_input("Enter Driver Phone",max_chars=10, key="driver_phone", help="Enter Driver Phone")
@@ -83,7 +83,7 @@ def driver_app():
                         connector.commit()
                         st.success("Driver Added Successfully")
                     except:
-                        st.error("Driver ID already exists , Non - numeric Values were entered in Id")
+                        st.error("Driver ID already exists")
                     finally:
                         mycursor.close()
                         connector.close()
@@ -113,28 +113,28 @@ def driver_app():
                 st.error("Either Driver list is empty or driver has been assigned a cab")
         if(operation_select == "Update Driver"):
             st.subheader("Update Driver")
-            try:
-                final_list = get_driver()
-                driver_id = st.selectbox("Select Driver ID", [""]+[[i[0],i[1]] for i in final_list])
-                submit_button = st.button("Search")
-                if(len(driver_id) > 1):
+            
+            final_list = get_driver()
+            driver_id = st.selectbox("Select Driver ID", [""]+[[i[0],i[1]] for i in final_list])
+            submit_button = st.button("Search")
+            if(len(driver_id) > 1):
+                try:
                     data = get_driver_specific(driver_id[0])
-                    with st.expander("View Raw Data", expanded = False):
-                        st.write(data)
-                    #print("_inital")
                     driver_id_new = st.text_input("Enter Driver ID",value = data[0][0],max_chars=10, key="driver_id_new", help="Enter Driver ID")
                     driver_name_new = st.text_input("Enter Driver Name",value = data[0][1],max_chars=50, key="driver_name_new", help="Enter Driver Name")
                     driver_email_new = st.text_input("Enter Driver Email",value = data[0][2],max_chars=50, key="driver_email_new", help="Enter Driver Email")
                     driver_phone_new = st.text_input("Enter Driver Phone",value = data[0][3],max_chars=10, key="driver_phone", help="Enter Driver Phone")
                     submit_button_1 = st.button("Update")
                     if(submit_button_1):
+
                         print("1")
                         update_driver(driver_id[0],driver_id_new, driver_name_new,driver_email_new, driver_phone_new)
                         print("2")
                         st.success("Driver Updated Successfully")
+                except:
+                    st.error("Either Driver list is empty or driver has been assigned a cab")
 
-            except:
-                st.error("Either Driver list is empty or driver has been assigned a cab")
+         
      
 
 # ======================================[Cab Area] ====================================================
