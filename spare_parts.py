@@ -131,8 +131,8 @@ def driver_app():
                         update_driver(driver_id[0],driver_id_new, driver_name_new,driver_email_new, driver_phone_new)
                         print("2")
                         st.success("Driver Updated Successfully")
-                except:
-                    st.error("Either Driver list is empty or driver has been assigned a cab")
+                except Exception as e:
+                    print("An error occurred:", e)
 
          
      
