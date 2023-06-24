@@ -53,7 +53,7 @@ def driver_app():
     with st.expander("Modify Driver Database", expanded = False):
         operation_select = st.selectbox("Select Operation", ["","Add Driver", "Remove Driver", "Update Driver"])
         if(operation_select == "Add Driver"):
-            driver_id = st.text_input("Enter Driver ID",max_chars=10, key="driver_id", help="Enter Driver ID")
+            driver_id = st.text_input("Enter Driver ID [Numeric Value Only]",max_chars=10, key="driver_id", help="Enter Driver ID")
             driver_name = st.text_input("Enter Driver Name",max_chars=50, key="driver_name", help="Enter Driver Name")
             driver_email = st.text_input("Enter Driver Email",max_chars=50, key="driver_email", help="Enter Driver Email")
             driver_phone = st.text_input("Enter Driver Phone",max_chars=10, key="driver_phone", help="Enter Driver Phone")
@@ -83,7 +83,7 @@ def driver_app():
                         connector.commit()
                         st.success("Driver Added Successfully")
                     except:
-                        st.error("Driver ID already exists")
+                        st.error("Driver ID already exists , Non - numeric Values were entered in Id")
                     finally:
                         mycursor.close()
                         connector.close()
